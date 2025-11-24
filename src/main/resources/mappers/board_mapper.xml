@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.mybatis_study.mapper.BoardMapper">
+
+    <resultMap id="BoardResultMap" type="com.korit.mybatis_study.entity.Board">
+        <id property="boardId" column="board_id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="createDt" column="create_dt" />
+        <result property="updateDt" column="update_dt" />
+    </resultMap>
+
+    <insert id="addBoard" useGeneratedKeys="true" keyProperty="boardId">
+        insert into
+            board_tb
+        values
+            (0, #{title}, #{content}, now(), null);
+    </insert>
+
+    <select id="findBoardByTitle" resultMap="BoardResultMap">
+        select
+            *
+        from
+            board_tb
+        where
+            title = #{title};
+    </select>
+
+    <select id="getBoardList" resultMap="BoardResultMap">
+        select
+            *
+        from
+            board_tb;
+    </select>
+
+    <select id="findBoardByBoardId" resultMap="BoardResultMap">
+        select
+            *
+        from
+            board_tb
+        where
+            board_id = #{boardId};
+    </select>
+
+    <update id="editBoard" >
+        update
+            board_tb
+        set
+            title = #{title},
+            content = #{content},
+            update_dt = now()
+        where
+            board_id = #{boardId}
+    </update>
+
+    <delete id="removeBoard">
+        delete from
+            board_tb
+        where
+            board_id = #{boardId};
+    </delete>
+</mapper>
+
+
+
+
+
+
+
+
+

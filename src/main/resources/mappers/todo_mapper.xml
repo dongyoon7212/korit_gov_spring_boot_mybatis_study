@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.korit.mybatis_study.mapper.TodoMapper">
+
+    <resultMap id="TodoResultMap" type="com.korit.mybatis_study.entity.Todo">
+        <id property="todoId" column="todo_id" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="createDt" column="create_dt" />
+        <result property="updateDt" column="update_dt" />
+    </resultMap>
+    <select id="findTodoByTitle" resultMap="TodoResultMap" >
+        select
+            *
+        from
+            todo_tb
+        where
+            title = #{title};
+    </select>
+
+    <insert id="addTodo" useGeneratedKeys="true" keyProperty="todoId">
+        insert into
+            todo_tb(todo_id, title, content, create_dt, update_dt)
+        values
+            (0, #{title}, #{content}, now(), null);
+    </insert>
+
+    <select id="getTodoAll" resultMap="TodoResultMap">
+        select
+            todo_id,
+            title,
+            content,
+            create_dt,
+            update_dt
+        from
+            todo_tb;
+    </select>
+
+    <select id="getTodoByTodoId" resultMap="TodoResultMap">
+        select
+            todo_id,
+            title,
+            content,
+            create_dt,
+            update_dt
+        from
+            todo_tb
+        where
+            todo_id = #{todoId};
+    </select>
+
+    <update id="editTodo">
+        update
+            todo_tb
+        set
+            title = #{title},
+            content = #{content},
+            update_dt = now()
+        where
+            todo_id = #{todoId};
+    </update>
+    <delete id="removeTodo">
+        delete from
+            todo_tb
+        where
+            todo_id = #{todoId};
+    </delete>
+</mapper>
+
+
+
+
+
+
+
+
+
